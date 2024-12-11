@@ -6,3 +6,5 @@ class userRepository extends crudRepository {
         super(User);
     }
 }
+
+module.exports = userRepository;
