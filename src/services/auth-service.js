@@ -29,6 +29,32 @@ class authService {
             throw error;
         }
     }
+
+    async loginUser(data) {
+        try {
+            if(!data.email || !data.password)  throw {
+                statusCode: 400,
+                message: 'Credentials Empty!!!'
+            }
+            const user = await this.userRepo.getBy({email: data.email});
+            if(!user) throw {
+                statusCode: 404,
+                message: `Email doesn't exists`
+            }
+            const password = bcrypt.compareSync(data.password, user.password);
+            if(!password) throw {
+                statusCode: 401,
+                message: 'Incorrect Password!!!'
+            }
+            return {
+                statusCode: 200,
+                message: 'login successfully.',
+                response: 'access token'
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = authService;

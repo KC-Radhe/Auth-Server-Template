@@ -14,7 +14,20 @@ const signup = async (req, res) => {
         );
     }
 }
+const login = async (req, res) => {
+    try {
+        const response = await authService.loginUser(req.body);
+        res.status(response.statusCode).json(
+            successResponse(response)
+        );
+    } catch (error) {
+        res.status(error.statusCode || 500).json(
+            errorResponse(error)
+        );
+    }
+}
 
 module.exports = {
     signup,
+    login,
 }
