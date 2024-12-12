@@ -11,7 +11,8 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 app.use('*', (req, res) => {
     res.status(404).send('Page not found');
-})
+});
+
 app.listen(PORT, () => {
     console.log(`server listening on http://localhost:${PORT}`);
     connectDB();
