@@ -1,18 +1,17 @@
 const AuthService = require('../services/auth-service');
-
+const { successResponse, errorResponse}= require('../utils/controller-response');
 const authService = new AuthService();
 
 const signup = async (req, res) => {
     try {
         const response = await authService.registerUser(req.body);
-        res.status(201).json({
-            message: 'a new user created',
-            data: response,
-        });
+        res.status(response.statusCode).json(
+            successResponse(response)
+        );
     } catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong!!! Internal error!!!'
-        });
+        res.status(error.statusCode || 500).json(
+            errorResponse(error)
+        );
     }
 }
 

@@ -7,9 +7,16 @@ class authService {
 
     async registerUser(data) {
         try {
-            if(!data.email || !data.password) throw {message: 'Credentials Empty!!!'}
+            if(!data.email || !data.password) throw {
+                statusCode: 400,
+                message: 'Credentials Empty!!!'
+            }
             const user = await this.userRepo.create(data);
-            return user;
+            return {
+                statusCode: 201,
+                message: 'A user created.',
+                response: user
+            };
         } catch (error) {
             throw error;
         }
