@@ -1,6 +1,5 @@
 const userRepository = require('../repository/user-repository');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const generateTokenAndSetCookie = require('../utils/genToken&setcookie');
 
 class authService {
