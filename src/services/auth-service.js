@@ -1,5 +1,7 @@
 const userRepository = require('../repository/user-repository');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const generateTokenAndSetCookie = require('../utils/genToken&setcookie');
 
 class authService {
     constructor() {
@@ -30,7 +32,7 @@ class authService {
         }
     }
 
-    async loginUser(data) {
+    async loginUser(data, res) {
         try {
             if(!data.email || !data.password)  throw {
                 statusCode: 400,
@@ -46,10 +48,11 @@ class authService {
                 statusCode: 401,
                 message: 'Incorrect Password!!!'
             }
+            const accessToken = await generateTokenAndSetCookie({ _id: user._id}, res);
             return {
                 statusCode: 200,
                 message: 'login successfully.',
-                response: 'access token'
+                response: accessToken,
             }
         } catch (error) {
             throw error;
