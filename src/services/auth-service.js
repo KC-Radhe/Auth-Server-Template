@@ -57,6 +57,23 @@ class authService {
             throw error;
         }
     }
+
+    async logoutUser(req, res) {
+        try {
+            const accessToken = req.cookies.access_token;
+            if(!accessToken) throw {
+                statusCode: 401,
+                message: 'Token not provided!!!',
+            }
+            res.clearCookie('access_token')
+            return {
+                statusCode: 200,
+                message: 'Logout successfully.',
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = authService;

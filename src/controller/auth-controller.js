@@ -26,8 +26,21 @@ const login = async (req, res) => {
         );
     }
 }
+const logout = async (req, res) => {
+    try {
+        const response = await authService.logoutUser(req, res);
+        res.status(response.statusCode).json(
+            successResponse(response)
+        );
+    } catch (error) {
+        res.status(error.statusCode || 500).json(
+            errorResponse(error)
+        );
+    }
+}
 
 module.exports = {
     signup,
     login,
+    logout,
 }
